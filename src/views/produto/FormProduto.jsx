@@ -17,6 +17,10 @@ export default function FormProduto() {
     const { state } = useLocation();
     const [idProduto, setIdProduto] = useState();
 
+    const [listaCategoria, setListaCategoria] = useState([]);
+   const [idCategoria, setIdCategoria] = useState();
+
+
     useEffect(() => {
         if (state != null && state.id != null) {
             axios.get("http://localhost:8081/api/produto/" + state.id)
@@ -28,19 +32,28 @@ export default function FormProduto() {
                     setValorUnitario(response.data.valorUnitario)
                     setTempoEntregaMaximo(response.data.tempoEntregaMaximo)
                     setTempoEntregaMinimo(response.data.tempoEntregaMinimo)
+                    setIdCategoria(response.data.categoria.id)
                 })
         }
+        axios.get("http://localhost:8081/api/categoriaproduto")
+        .then((response) => {
+            const dropDownCategorias = response.data.map(c => ({ text: c.descricao, value: c.id }));
+            setListaCategoria(dropDownCategorias);
+        })
+ 
     }, [state])
 
     function salvar() {
 
         let ProdutoRequest = {
+            idCategoria: idCategoria,
             titulo: titulo,
             codigo: codigo,
             descricao: descricao,
             valorUnitario: valorUnitario,
             tempoEntregaMaximo: tempoEntregaMaximo,
             tempoEntregaMinimo: tempoEntregaMinimo
+            
         }
 
         if (idProduto != null) { //Alteração:
@@ -83,14 +96,14 @@ export default function FormProduto() {
 
                         <Form>
 
-                            <Form.Group >
+                            <Form.Group widths='equal' >
 
                                 <Form.Input
                                     required
                                     fluid
                                     label='Título'
                                     maxLength="300"
-                                    width={15}
+                                    //width={8}
                                     placeholder='Informe o título do produto '
                                     value={titulo}
                                     onChange={e => setTitulo(e.target.value)}
@@ -100,7 +113,7 @@ export default function FormProduto() {
                                     required
                                     fluid
                                     label='Código do Produto'
-                                    width={8}
+                                    //width={8}
                                     placeholder='Informe o código do produto'
                                     value={codigo}
                                     onChange={e => setCodigo(e.target.value)}
@@ -108,7 +121,24 @@ export default function FormProduto() {
 
                                 </Form.Input>
 
+                                <Form.Select
+	required
+	fluid
+    //width={8}
+	tabIndex='3'
+	placeholder='Selecione'
+	label='Categoria'
+	options={listaCategoria}
+	value={idCategoria}
+	onChange={(e,{value}) => {
+		setIdCategoria(value)
+	}}
+/>
+
                             </Form.Group>
+
+  
+
 
                             <Form.Group widths='equal'>
 

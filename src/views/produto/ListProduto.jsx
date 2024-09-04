@@ -83,8 +83,9 @@ export default function ListProduto() {
 
                             <Table.Header>
                                 <Table.Row textAlign='center'>
-                                    <Table.HeaderCell>Titulo</Table.HeaderCell>
                                     <Table.HeaderCell>Codigo</Table.HeaderCell>
+                                    <Table.HeaderCell>Categoria</Table.HeaderCell>
+                                    <Table.HeaderCell>Titulo</Table.HeaderCell>
                                     <Table.HeaderCell>Descricao</Table.HeaderCell>
                                     <Table.HeaderCell>Valor Unitario</Table.HeaderCell>
                                     <Table.HeaderCell>Tempo Entrega Maximo</Table.HeaderCell>
@@ -98,8 +99,9 @@ export default function ListProduto() {
                                 {lista.map(produto => (
 
                                     <Table.Row key={produto.id} style={{ whiteSpace: 'nowra' }}>
-                                        <Table.Cell>{produto.titulo}</Table.Cell>
                                         <Table.Cell>{produto.codigo}</Table.Cell>
+                                        <Table.Cell>{produto.categoria.descricao}</Table.Cell>
+                                        <Table.Cell>{produto.titulo}</Table.Cell>
                                         <Table.Cell>{formatarData(produto.descricao)}</Table.Cell>
                                         <Table.Cell>{produto.valorUnitario}</Table.Cell>
                                         <Table.Cell>{produto.tempoEntregaMaximo}</Table.Cell>

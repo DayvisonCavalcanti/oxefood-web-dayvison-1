@@ -25,6 +25,7 @@ export default function FormLogin () {
             .then((response) => {
 
                 registerSuccessfulLoginForJwt(response.data.token, response.data.expiration)
+                console.log(response.data)
                 navigate("/home");
                 
             })
